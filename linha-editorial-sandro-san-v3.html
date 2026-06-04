@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linha Editorial V2 — Sandro San · Milionário Renegado</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:       #8A05BE;
+    --purple-dark:  #3D0D52;
+    --purple-soft:  #C96DDE;
+    --purple-tint:  #F5EDFB;
+    --purple-border:#E4C8F2;
+    --white:        #FFFFFF;
+    --surface:      #FAFAFA;
+    --text-primary: #1D0B2D;
+    --text-body:    #3D3548;
+    --text-muted:   #74637D;
+    --text-light:   #A693AE;
+    --border:       #E8E3ED;
+    --border-light: #F0EBF4;
+    --shadow-sm:    0 1px 3px rgba(61,13,82,0.06);
+    --shadow-md:    0 4px 12px rgba(61,13,82,0.09);
+    --radius-sm:    8px;
+    --radius-md:    12px;
+    --radius-lg:    16px;
+    --radius-full:  999px;
+    --c1:#7C3AED; --c1t:#F5F3FF; --c1b:#DDD6FE;
+    --c2:#0369A1; --c2t:#F0F9FF; --c2b:#BAE6FD;
+    --c3:#B45309; --c3t:#FFFBEB; --c3b:#FDE68A;
+    --c4:#065F46; --c4t:#ECFDF5; --c4b:#A7F3D0;
+    --c5:#BE185D; --c5t:#FDF2F8; --c5b:#FBCFE8;
+    --c6:#1D4ED8; --c6t:#EFF6FF; --c6b:#BFDBFE;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--white);color:var(--text-body);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:230px;background:var(--white);border-right:1px solid var(--border);padding:20px 14px;overflow-y:auto;z-index:100;}
+  .sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .logo-mark{width:32px;height:32px;background:var(--purple);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .logo-mark span{color:#fff;font-size:12px;font-weight:800;}
+  .logo-text{font-size:13px;font-weight:800;color:var(--text-primary);line-height:1.2;}
+  .logo-sub{font-size:10px;color:var(--text-muted);margin-top:1px;}
+  .nav-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);padding:10px 10px 4px;}
+  .nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:var(--radius-sm);text-decoration:none;color:var(--text-muted);font-size:12px;font-weight:500;transition:all 0.15s;margin-bottom:1px;}
+  .nav-item:hover{background:var(--purple-tint);color:var(--purple);}
+  .nav-num{font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-tint);min-width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .nav-item.phase .nav-num{background:var(--purple);color:white;}
+
+  .main{margin-left:230px;}
+
+  .cover{background:var(--purple-dark);padding:64px 64px 56px;position:relative;overflow:hidden;}
+  .cover::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;border-radius:50%;background:rgba(138,5,190,0.22);pointer-events:none;}
+  .cover-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius-full);padding:5px 14px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:20px;position:relative;z-index:1;}
+  .cover-dot{width:6px;height:6px;border-radius:50%;background:var(--purple-soft);}
+  .cover-title{font-size:clamp(36px,5vw,60px);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-1.2px;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title .accent{color:var(--purple-soft);}
+  .cover-sub{font-size:14px;color:rgba(255,255,255,0.48);margin-bottom:32px;position:relative;z-index:1;}
+  .cover-mission{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-left:3px solid var(--purple-soft);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:18px 22px;margin-bottom:30px;position:relative;z-index:1;max-width:600px;}
+  .cover-mission-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-soft);margin-bottom:7px;}
+  .cover-mission p{font-size:16px;font-weight:600;color:rgba(255,255,255,0.88);line-height:1.55;margin:0;}
+  .cover-chips{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1;}
+  .cover-chip{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.11);border-radius:var(--radius-full);padding:5px 13px;font-size:11.5px;font-weight:500;color:rgba(255,255,255,0.52);}
+  .cover-chip strong{color:rgba(255,255,255,0.82);font-weight:700;}
+
+  .section{padding:56px 64px 48px;border-bottom:1px solid var(--border-light);}
+  .section:nth-child(even){background:var(--surface);}
+  .section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:32px;}
+  .section-badge{background:var(--purple-tint);color:var(--purple);font-size:11px;font-weight:800;width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;}
+  .section-badge.phase-b{background:var(--purple);color:white;}
+  .section-title{font-size:22px;font-weight:800;color:var(--text-primary);letter-spacing:-0.4px;margin-bottom:3px;}
+  .section-desc{font-size:13px;color:var(--text-muted);}
+  .new-tag{display:inline-block;background:var(--purple);color:white;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-full);margin-left:8px;vertical-align:middle;}
+
+  h3{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-primary);margin:30px 0 12px;}
+  h3:first-child{margin-top:0;}
+  p{font-size:14.5px;color:var(--text-body);line-height:1.78;margin-bottom:14px;}
+  p:last-child{margin-bottom:0;}
+
+  .pill{display:inline-flex;align-items:center;background:var(--purple-tint);color:var(--purple);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:4px 12px;border-radius:var(--radius-full);margin-bottom:12px;}
+  .insight{background:linear-gradient(135deg,var(--purple-tint),#F8EFFE);border:1px solid var(--purple-border);border-radius:var(--radius-md);padding:20px 22px;margin:20px 0;}
+  .insight-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:9px;}
+  .insight p{font-size:15px;font-weight:500;color:var(--purple-dark);margin:0;}
+  .decree{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 22px;margin:18px 0;}
+  .decree-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+  .decree-label::before{content:'';display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--purple);}
+  .decree p{font-size:14px;color:var(--text-body);margin-bottom:8px;}
+  .decree p:last-child{margin-bottom:0;}
+
+  /* THREE RINGS */
+  .rings-container{position:relative;margin:28px 0;display:flex;gap:24px;align-items:stretch;}
+  .ring-card{flex:1;border-radius:var(--radius-md);padding:24px 20px;border:1px solid transparent;transition:all 0.15s;}
+  .ring-card:hover{box-shadow:var(--shadow-md);}
+  .ring-card.r1{background:#FFF7ED;border-color:#FED7AA;}
+  .ring-card.r2{background:#F0FDF4;border-color:#BBF7D0;}
+  .ring-card.r3{background:var(--purple-tint);border-color:var(--purple-border);}
+  .ring-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px;}
+  .r1 .ring-label{color:#C2410C;}
+  .r2 .ring-label{color:#15803D;}
+  .r3 .ring-label{color:var(--purple);}
+  .ring-title{font-size:16px;font-weight:800;color:var(--text-primary);margin-bottom:8px;line-height:1.2;}
+  .ring-size{font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:12px;}
+  .ring-desc{font-size:13px;color:var(--text-body);line-height:1.6;margin-bottom:12px;}
+  .ring-hook{font-size:12.5px;font-style:italic;padding:9px 12px;border-radius:var(--radius-sm);line-height:1.5;}
+  .r1 .ring-hook{background:#FEF3C7;color:#92400E;}
+  .r2 .ring-hook{background:#DCFCE7;color:#14532D;}
+  .r3 .ring-hook{background:var(--purple-tint2);color:var(--purple-dark);}
+
+  /* ARCHETYPE CARDS */
+  .archetype-card{border-radius:var(--radius-lg);padding:24px 22px;margin:10px 0;border:1px solid transparent;transition:all 0.15s;}
+  .archetype-card:hover{box-shadow:var(--shadow-md);}
+  .archetype-card.a1{background:var(--c1t);border-color:var(--c1b);}
+  .archetype-card.a2{background:var(--c2t);border-color:var(--c2b);}
+  .archetype-card.a3{background:var(--c3t);border-color:var(--c3b);}
+  .archetype-card.a4{background:var(--c4t);border-color:var(--c4b);}
+  .archetype-card.a5{background:var(--c5t);border-color:var(--c5b);}
+  .archetype-card.a6{background:var(--c6t);border-color:var(--c6b);}
+  .arch-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
+  .arch-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
+  .a1 .arch-icon{background:rgba(124,58,237,0.12);}
+  .a2 .arch-icon{background:rgba(3,105,161,0.12);}
+  .a3 .arch-icon{background:rgba(180,83,9,0.12);}
+  .a4 .arch-icon{background:rgba(6,95,70,0.12);}
+  .a5 .arch-icon{background:rgba(190,24,93,0.12);}
+  .a6 .arch-icon{background:rgba(29,78,216,0.12);}
+  .arch-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px;}
+  .a1 .arch-label{color:var(--c1);}
+  .a2 .arch-label{color:var(--c2);}
+  .a3 .arch-label{color:var(--c3);}
+  .a4 .arch-label{color:var(--c4);}
+  .a5 .arch-label{color:var(--c5);}
+  .a6 .arch-label{color:var(--c6);}
+  .arch-title{font-size:16px;font-weight:800;color:var(--text-primary);line-height:1.2;}
+  .arch-desc{font-size:13.5px;color:var(--text-body);line-height:1.7;margin-bottom:14px;}
+  .arch-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+  .arch-meta-item{background:rgba(255,255,255,0.65);border-radius:var(--radius-sm);padding:9px 11px;}
+  .arch-meta-key{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:2px;}
+  .arch-meta-val{font-size:12.5px;font-weight:600;color:var(--text-primary);}
+  .arch-audiences{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+  .arch-aud-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);}
+  .aud-1{background:#FEF3C7;color:#92400E;}
+  .aud-2{background:#DCFCE7;color:#14532D;}
+  .aud-3{background:var(--purple-tint2);color:var(--purple-dark);}
+  .arch-example-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;}
+  .arch-example{background:rgba(255,255,255,0.7);border-radius:var(--radius-sm);padding:9px 12px;margin-bottom:5px;font-size:13px;color:var(--text-body);font-style:italic;line-height:1.55;}
+  .arch-example:last-child{margin-bottom:0;}
+
+  /* GRAVITY PHASES */
+  .phase-block{border-radius:var(--radius-lg);overflow:hidden;margin:12px 0;box-shadow:var(--shadow-sm);}
+  .phase-header{padding:18px 24px;display:flex;align-items:center;gap:14px;}
+  .ph1 .phase-header{background:#1E1B4B;}
+  .ph2 .phase-header{background:#1A3A1A;}
+  .ph3 .phase-header{background:#3D0D52;}
+  .ph4 .phase-header{background:#1A1A3A;}
+  .phase-num{background:rgba(255,255,255,0.15);color:white;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:var(--radius-full);}
+  .phase-name{font-size:17px;font-weight:800;color:white;}
+  .phase-period{font-size:12px;color:rgba(255,255,255,0.5);margin-left:auto;}
+  .phase-body{background:var(--white);border:1px solid var(--border);border-top:none;padding:22px 24px;}
+  .phase-goal{font-size:13.5px;font-weight:600;color:var(--text-primary);margin-bottom:14px;padding:10px 14px;background:var(--surface);border-radius:var(--radius-sm);border-left:3px solid var(--purple);}
+  .phase-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+  .phase-action{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;transition:all 0.15s;}
+  .phase-action:hover{border-color:var(--purple-border);}
+  .phase-action-title{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+  .phase-action-desc{font-size:12px;color:var(--text-muted);line-height:1.5;}
+  .phase-content{margin-top:16px;}
+  .phase-content-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+  .phase-content-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:13px;color:var(--text-body);}
+  .phase-content-item:last-child{border-bottom:none;}
+  .pci-arch{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:var(--radius-full);flex-shrink:0;margin-top:2px;}
+  .pci-1{background:var(--c1t);color:var(--c1);}
+  .pci-2{background:var(--c2t);color:var(--c2);}
+  .pci-3{background:var(--c3t);color:var(--c3);}
+  .pci-4{background:var(--c4t);color:var(--c4);}
+  .pci-5{background:var(--c5t);color:var(--c5);}
+  .pci-6{background:var(--c6t);color:var(--c6);}
+
+  /* CADENCE */
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0;}
+  .day-col{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 8px;text-align:center;min-height:150px;display:flex;flex-direction:column;gap:5px;transition:all 0.15s;}
+  .day-col:hover{border-color:var(--purple-border);box-shadow:var(--shadow-sm);}
+  .day-name{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid var(--border-light);}
+  .day-item{font-size:10px;font-weight:600;color:white;padding:5px 5px;border-radius:5px;line-height:1.3;}
+  .di-1{background:var(--c1);}
+  .di-2{background:var(--c2);}
+  .di-3{background:var(--c3);}
+  .di-4{background:var(--c4);}
+  .di-5{background:var(--c5);}
+  .di-6{background:var(--c6);}
+  .di-rest{background:var(--surface);color:var(--text-muted);font-size:9px;}
+
+  /* MIX BAR */
+  .mix-bar{display:flex;height:12px;border-radius:var(--radius-full);overflow:hidden;margin:14px 0;}
+  .mix-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;}
+  .mix-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-body);}
+  .mix-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+  /* PLATFORM */
+  .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;}
+  .platform-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 17px;box-shadow:var(--shadow-sm);transition:all 0.15s;}
+  .platform-card:hover{border-color:var(--purple-border);box-shadow:var(--shadow-md);}
+  .platform-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .platform-icon{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+  .platform-name{font-size:14px;font-weight:800;color:var(--text-primary);}
+  .platform-role{font-size:11px;font-weight:600;color:var(--text-muted);}
+  .platform-priority{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:var(--radius-full);margin-bottom:10px;}
+  .pri-primary{background:var(--purple-tint);color:var(--purple);}
+  .pri-secondary{background:var(--surface);color:var(--text-muted);}
+  .platform-list{list-style:none;}
+  .platform-list li{font-size:13px;color:var(--text-body);padding:5px 0;border-bottom:1px solid var(--border-light);display:flex;align-items:flex-start;gap:8px;}
+  .platform-list li:last-child{border-bottom:none;}
+  .platform-list li::before{content:'→';color:var(--purple);font-size:11px;font-weight:700;margin-top:2px;flex-shrink:0;}
+
+  /* PODCAST ALTERNATIVE */
+  .podcast-phase{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 18px;margin:8px 0;display:flex;gap:14px;align-items:flex-start;transition:all 0.15s;}
+  .podcast-phase:hover{border-color:var(--purple-border);}
+  .podcast-phase-num{background:var(--purple-dark);color:white;font-size:11px;font-weight:800;width:28px;height:28px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .podcast-phase-title{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+  .podcast-phase-desc{font-size:13px;color:var(--text-muted);line-height:1.55;}
+  .podcast-phase-example{font-size:12.5px;color:var(--purple);font-style:italic;margin-top:6px;padding-top:6px;border-top:1px solid var(--purple-border);}
+
+  /* WA TEST */
+  .wa-test{background:var(--purple-dark);border-radius:var(--radius-md);padding:20px 22px;margin:20px 0;display:flex;gap:15px;align-items:flex-start;}
+  .wa-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+  .wa-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;}
+  .wa-rule{font-size:14px;font-weight:700;color:var(--purple-soft);font-style:italic;margin-top:7px;}
+  .wa-desc{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;}
+
+  .closing{background:var(--purple-dark);padding:56px 64px;text-align:center;}
+  .closing-line{font-size:17px;font-weight:500;color:rgba(255,255,255,0.65);line-height:1.8;max-width:500px;margin:0 auto 22px;font-style:italic;}
+  .closing-line em{color:var(--purple-soft);font-weight:700;}
+  .closing-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.11);border-radius:var(--radius-full);padding:6px 18px;font-size:12px;font-weight:500;color:rgba(255,255,255,0.42);}
+
+  hr.divider{border:none;border-top:1px solid var(--border-light);margin:24px 0;}
+
+  @media(max-width:980px){
+    .sidebar{display:none;}
+    .main{margin-left:0;}
+    .cover,.section,.closing{padding-left:24px;padding-right:24px;}
+    .rings-container,.platform-grid,.arch-meta,.phase-actions,.mix-legend{grid-template-columns:1fr;flex-direction:column;}
+    .rings-container{flex-direction:column;}
+    .week-grid{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><span>SS</span></div>
+    <div><div class="logo-text">Sandro San</div><div class="logo-sub">Linha Editorial V2 · 2025</div></div>
+  </div>
+
+  <div class="nav-label">Audiência</div>
+  <a href="#s01" class="nav-item"><span class="nav-num">01</span> Os 3 Anéis</a>
+  <a href="#s02" class="nav-item"><span class="nav-num">02</span> Os 6 Arquétipos</a>
+  <a href="#s03" class="nav-item"><span class="nav-num">03</span> Mix e Cadência</a>
+  <a href="#s04" class="nav-item"><span class="nav-num">04</span> Plataformas</a>
+  <a href="#s05" class="nav-item"><span class="nav-num">05</span> O Podcast</a>
+
+  <div class="nav-label">Construção da Tribo</div>
+  <a href="#s06" class="nav-item phase"><span class="nav-num">F1</span> Campo Gravitacional</a>
+  <a href="#s07" class="nav-item phase"><span class="nav-num">F2</span> Primeiras Órbitas</a>
+  <a href="#s08" class="nav-item phase"><span class="nav-num">F3</span> Estruturação</a>
+  <a href="#s09" class="nav-item phase"><span class="nav-num">F4</span> Efeito de Rede</a>
+
+  <div class="nav-label">Execução</div>
+  <a href="#s10" class="nav-item"><span class="nav-num">10</span> Regras</a>
+</nav>
+
+<div class="main">
+
+<div class="cover">
+  <div class="cover-eyebrow"><span class="cover-dot"></span>Milionário Renegado — EMPIRE</div>
+  <h1 class="cover-title">Linha <span class="accent">Editorial V2</span></h1>
+  <p class="cover-sub">3 Anéis de Audiência · 6 Arquétipos · Plano de Construção Gravitacional da Tribo</p>
+  <div class="cover-mission">
+    <div class="cover-mission-label">O Princípio Fundador</div>
+    <p>Você não constrói o campo gravitacional para a tribo. Você cria o campo e a tribo se forma dentro dele.</p>
+  </div>
+  <div class="cover-chips">
+    <span class="cover-chip"><strong>3 anéis</strong> de audiência</span>
+    <span class="cover-chip"><strong>6 arquétipos</strong> de conteúdo</span>
+    <span class="cover-chip"><strong>4 fases</strong> de construção da tribo</span>
+    <span class="cover-chip"><strong>Identificação pessoal</strong> como pilar</span>
+  </div>
+</div>
+
+<!-- 01 OS 3 ANÉIS -->
+<div class="section" id="s01">
+  <div class="section-header">
+    <div class="section-badge">01</div>
+    <div><div class="section-title">Os 3 Anéis de Audiência <span class="new-tag">REVISADO</span></div><div class="section-desc">Para quem o conteúdo fala — e como cada anel entra na tese</div></div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">A Correção</div>
+    <p>O conteúdo anterior falava exclusivamente para especialistas. Isso restringe alcance e impede a formação de tribo em escala. A audiência tem três anéis — todos unidos pelo inimigo comum e pela tese, mas com pontos de entrada diferentes.</p>
+  </div>
+
+  <div class="rings-container">
+    <div class="ring-card r1">
+      <div class="ring-label">Anel 01 — O Mais Largo</div>
+      <div class="ring-title">Os Aspirantes</div>
+      <div class="ring-size">Maior volume · Maior ativação emocional · Maior compartilhamento</div>
+      <div class="ring-desc">Pessoas empregadas ou no início da jornada que sentem que estão construindo o sonho de outra pessoa. Sentem o peso do sistema todos os dias mas não sabem nomear. Quando o conteúdo nomeia o que elas sentem, compartilham compulsivamente porque finalmente alguém disse em voz alta o que elas pensam mas não tinham palavras.</div>
+      <div class="ring-hook">"Você trabalha 40 horas por semana construindo o negócio de outra pessoa."</div>
+    </div>
+    <div class="ring-card r2">
+      <div class="ring-label">Anel 02 — O Intermediário</div>
+      <div class="ring-title">Os Empreendedores Ativos</div>
+      <div class="ring-size">Volume médio · Alta identificação · Disposição para agir</div>
+      <div class="ring-desc">Já estão rodando negócio, têm resultado, mas percebem que faturamento não virou patrimônio. O teto invisível está presente. A pergunta deles não é "como eu começo" — é "por que mesmo crescendo parece que nada fica". Estão no meio da transição sem ter mapa.</div>
+      <div class="ring-hook">"Seu negócio fatura. Mas se você parar amanhã, quanto sobra de verdade?"</div>
+    </div>
+    <div class="ring-card r3">
+      <div class="ring-label">Anel 03 — O Mais Interno</div>
+      <div class="ring-title">Os Especialistas e Experts</div>
+      <div class="ring-size">Menor volume · Maior qualificação · Candidatos à tribo</div>
+      <div class="ring-desc">Têm conhecimento, metodologia, resultado comprovado. Percebem que têm capital intelectual que não está estruturado como ativo. São os candidatos naturais à tribo — mais resistentes a seguir um líder, mas quando seguem, são os mais leais e os que mais amplificam.</div>
+      <div class="ring-hook">"Você tem o conhecimento. Quando vai transformar isso em ativo?"</div>
+    </div>
+  </div>
+
+  <div class="decree">
+    <div class="decree-label">Regra dos 3 Anéis</div>
+    <p>A tese-mãe fala para os três. O <strong>ponto de entrada</strong> muda. Provocações devem atingir primariamente o Anel 1 — são elas que geram o volume de audiência que vira moeda. O Mapa e o Jogo Invisível atingem os Anéis 2 e 3. A Identidade Pessoal (novo arquétipo) atravessa os três ao mesmo tempo.</p>
+    <p>Quando criar conteúdo, identifique: <strong>qual anel este post vai ativar?</strong> Se a resposta for "só especialistas", o post precisa ser reescrito ou é conteúdo de anel 3 intencional.</p>
+  </div>
+</div>
+
+<!-- 02 OS 6 ARQUÉTIPOS -->
+<div class="section" id="s02">
+  <div class="section-header">
+    <div class="section-badge">02</div>
+    <div><div class="section-title">Os 6 Arquétipos de Conteúdo <span class="new-tag">+1 NOVO</span></div><div class="section-desc">Identidade Pessoal adicionada como arquétipo fundacional</div></div>
+  </div>
+
+  <!-- A6 IDENTIDADE — em destaque por ser novo -->
+  <div class="insight">
+    <div class="insight-label">O Arquétipo que Faltava — e Por Que é Fundacional</div>
+    <p>Tribo não se forma em torno de método. Se forma em torno de líder. Ninguém segue um líder que não conhece. A Identidade Pessoal é o que cria a identificação emocional sem a qual nenhuma das outras estratégias funciona — as pessoas precisam ver Sandro como <em>alguém como eu</em> ou <em>alguém que eu quero me tornar</em>.</p>
+  </div>
+
+  <div class="archetype-card a6">
+    <div class="arch-header">
+      <div class="arch-icon">🙏</div>
+      <div>
+        <div class="arch-label">Arquétipo 06 — NOVO · FUNDACIONAL</div>
+        <div class="arch-title">Identidade e História</div>
+      </div>
+    </div>
+    <div class="arch-desc">As histórias pessoais, os valores vividos e a visão de mundo de Sandro. Não é lifestyle — não mostra o que ele tem. É identidade — mostra quem ele é. A fé católica como fonte de decisões. A família como estrutura de vida. O conservadorismo como visão de mundo. A jornada pessoal de saída do sistema. Os medos reais antes das grandes decisões. Os erros que formaram o método. Este arquétipo é o que cria identificação tribal profunda — sem ele, o conteúdo pode ser intelectualmente interessante mas não forma tribo.</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">Identificação tribal</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">2× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Long-form · Story · Vídeo pessoal</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-1">Aspirantes</span>
+      <span class="arch-aud-tag aud-2">Empreendedores</span>
+      <span class="arch-aud-tag aud-3">Especialistas</span>
+    </div>
+    <div class="arch-example-label">Tipos de Conteúdo de Identidade</div>
+    <div class="arch-example">A Lenda de Criação — "O momento em que percebi que estava construindo para o sistema. E o que decidi naquele dia."</div>
+    <div class="arch-example">Fé como Bússola — "Como tomo decisões de negócio. A pergunta que faço antes de qualquer movimento grande."</div>
+    <div class="arch-example">Paternidade e Soberania — "O que quero deixar para meus filhos não é dinheiro. É esse princípio."</div>
+    <div class="arch-example">O Medo Real — "A decisão que mais medo tive de tomar. E o que aconteceu quando tomei."</div>
+    <div class="arch-example">Valores em Prática — "Por que recusei esse negócio mesmo sendo financeiramente interessante."</div>
+    <div class="arch-example">A Rotina do Líder — "Como organizo minha semana. Não como inspiração — como prova de que o modelo funciona."</div>
+  </div>
+
+  <!-- A1 -->
+  <div class="archetype-card a1">
+    <div class="arch-header">
+      <div class="arch-icon">⚡</div>
+      <div><div class="arch-label">Arquétipo 01</div><div class="arch-title">Provocação</div></div>
+    </div>
+    <div class="arch-desc">Motor de crescimento de audiência. Frases curtas e fortes que nomeiam o sistema ou suas contradições. Derivadas das 8 tensões. Não explicam — instalam desconforto produtivo. Devem atingir primariamente o Anel 1 — os aspirantes que finalmente se sentem vistos.</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">F1 — Audiência</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">3× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Post · Story · Reels curto</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-1">Aspirantes ★</span>
+      <span class="arch-aud-tag aud-2">Empreendedores</span>
+      <span class="arch-aud-tag aud-3">Especialistas</span>
+    </div>
+    <div class="arch-example-label">Exemplos por Anel</div>
+    <div class="arch-example">Anel 1: "Você trabalha 40 horas por semana construindo o negócio de outra pessoa. Chamam isso de emprego estável."</div>
+    <div class="arch-example">Anel 2: "Faturamento não é riqueza. Riqueza é ativo que trabalha quando você para."</div>
+    <div class="arch-example">Anel 3: "Saber muito já não é vantagem competitiva. Conhecimento sem distribuição virou commodity."</div>
+  </div>
+
+  <!-- A2 -->
+  <div class="archetype-card a2">
+    <div class="arch-header">
+      <div class="arch-icon">🗺️</div>
+      <div><div class="arch-label">Arquétipo 02</div><div class="arch-title">O Mapa</div></div>
+    </div>
+    <div class="arch-desc">Mostra como a transição funciona na prática. Mais denso, mais metodológico. Não é tutorial de ferramenta — é arquitetura de pensamento. Responde a pergunta real de cada anel: "como eu saio daqui?"</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">F2 — Tribo</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">2× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Carrossel · Long-form</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-1">Aspirantes</span>
+      <span class="arch-aud-tag aud-2">Empreendedores ★</span>
+      <span class="arch-aud-tag aud-3">Especialistas ★</span>
+    </div>
+    <div class="arch-example-label">Exemplos por Anel</div>
+    <div class="arch-example">Anel 1: "Como sair do emprego sem perder a renda — os 3 movimentos que ninguém conta"</div>
+    <div class="arch-example">Anel 2: "Por que seu negócio fatura mas não vira patrimônio — e como mudar isso"</div>
+    <div class="arch-example">Anel 3: "Como transformar uma metodologia em participação societária"</div>
+  </div>
+
+  <!-- A3 -->
+  <div class="archetype-card a3">
+    <div class="arch-header">
+      <div class="arch-icon">🎭</div>
+      <div><div class="arch-label">Arquétipo 03</div><div class="arch-title">O Jogo Invisível</div></div>
+    </div>
+    <div class="arch-desc">Análise de casos reais de negócios e fundadores — lente dupla: estrutural e psicológica. Constrói autoridade de forma incomparável. Serve à F3 (deals) pois demonstra raciocínio de founder que decisores querem como sócio.</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">F3 — Deals</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">1× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Vídeo · Carrossel · Podcast</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-2">Empreendedores ★</span>
+      <span class="arch-aud-tag aud-3">Especialistas ★</span>
+    </div>
+    <div class="arch-example-label">Estrutura dos 5 Movimentos</div>
+    <div class="arch-example">O Crime · A Versão Oficial · O Jogo Invisível · O Que Eu Teria Feito · O Princípio</div>
+  </div>
+
+  <!-- A4 -->
+  <div class="archetype-card a4">
+    <div class="arch-header">
+      <div class="arch-icon">🏗️</div>
+      <div><div class="arch-label">Arquétipo 04</div><div class="arch-title">Bastidores</div></div>
+    </div>
+    <div class="arch-desc">O founder documentando decisões reais em tempo real. Análises, recusas, estruturações, erros. Prova que o método é vivido, não apenas ensinado. Serve F1 (reach humano) e F3 (credibilidade para deals).</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">F1 + F3</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">2× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Story · Post curto · Reels</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-2">Empreendedores ★</span>
+      <span class="arch-aud-tag aud-3">Especialistas ★</span>
+    </div>
+    <div class="arch-example-label">Tipos de Bastidores</div>
+    <div class="arch-example">"Analisei uma empresa essa semana. O que me fez sair sem assinar..."</div>
+    <div class="arch-example">"Recusei R$X esse mês. O critério que uso para decidir o que não entra."</div>
+  </div>
+
+  <!-- A5 -->
+  <div class="archetype-card a5">
+    <div class="arch-header">
+      <div class="arch-icon">🔥</div>
+      <div><div class="arch-label">Arquétipo 05</div><div class="arch-title">A Tribo em Movimento</div></div>
+    </div>
+    <div class="arch-desc">Dar palco a pessoas que estão evoluindo no caminho da soberania — membros da tribo quando existirem, convidados relevantes antes disso. Cria prova social, amplifica o movimento e mostra que a visão é alcançável.</div>
+    <div class="arch-meta">
+      <div class="arch-meta-item"><div class="arch-meta-key">Função</div><div class="arch-meta-val">F2 — Tribo</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Frequência</div><div class="arch-meta-val">1× por semana</div></div>
+      <div class="arch-meta-item"><div class="arch-meta-key">Formatos</div><div class="arch-meta-val">Podcast · Posts de resultado</div></div>
+    </div>
+    <div class="arch-audiences">
+      <span class="arch-aud-tag aud-1">Aspirantes</span>
+      <span class="arch-aud-tag aud-2">Empreendedores ★</span>
+      <span class="arch-aud-tag aud-3">Especialistas</span>
+    </div>
+    <div class="arch-example-label">Antes da tribo existir — ver Seção 05 (Podcast)</div>
+    <div class="arch-example">Entrevistar candidatos naturais à tribo: pessoas que já fizeram a transição</div>
+  </div>
+</div>
+
+<!-- 03 MIX E CADÊNCIA -->
+<div class="section" id="s03">
+  <div class="section-header">
+    <div class="section-badge">03</div>
+    <div><div class="section-title">Mix e Cadência</div><div class="section-desc">A proporção e o ritmo semanal revisados</div></div>
+  </div>
+
+  <h3>Distribuição Semanal — 9 Posts</h3>
+  <div class="mix-bar">
+    <div style="flex:3;background:var(--c1);"></div>
+    <div style="flex:2;background:var(--c2);"></div>
+    <div style="flex:1;background:var(--c3);"></div>
+    <div style="flex:2;background:var(--c4);"></div>
+    <div style="flex:1;background:var(--c5);"></div>
+    <div style="flex:2;background:var(--c6);"></div>
+  </div>
+  <div class="mix-legend">
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c1);"></div><span><strong>3×</strong> Provocação</span></div>
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c2);"></div><span><strong>2×</strong> O Mapa</span></div>
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c3);"></div><span><strong>1×</strong> Jogo Invisível</span></div>
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c4);"></div><span><strong>2×</strong> Bastidores</span></div>
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c5);"></div><span><strong>1×</strong> A Tribo</span></div>
+    <div class="mix-item"><div class="mix-dot" style="background:var(--c6);"></div><span><strong>2×</strong> Identidade</span></div>
+  </div>
+
+  <h3>Cadência Semanal — Padrão</h3>
+  <div class="week-grid">
+    <div class="day-col">
+      <div class="day-name">SEG</div>
+      <div class="day-item di-1">Provocação</div>
+      <div class="day-item di-6">Identidade</div>
+      <div class="day-item di-rest">Feed + Story</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">TER</div>
+      <div class="day-item di-2">O Mapa</div>
+      <div class="day-item di-rest">Carrossel</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">QUA</div>
+      <div class="day-item di-4">Bastidores</div>
+      <div class="day-item di-rest">Story / Post</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">QUI</div>
+      <div class="day-item di-3">Jogo Invisível</div>
+      <div class="day-item di-rest">Vídeo</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">SEX</div>
+      <div class="day-item di-1">Provocação</div>
+      <div class="day-item di-rest">Feed</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">SÁB</div>
+      <div class="day-item di-5">A Tribo</div>
+      <div class="day-item di-4">Bastidores</div>
+      <div class="day-item di-rest">Podcast + Story</div>
+    </div>
+    <div class="day-col">
+      <div class="day-name">DOM</div>
+      <div class="day-item di-2">O Mapa</div>
+      <div class="day-item di-6">Identidade</div>
+      <div class="day-item di-1">Provocação</div>
+    </div>
+  </div>
+
+  <div class="decree">
+    <div class="decree-label">Por que Identidade na Segunda e Domingo</div>
+    <p>Segunda é o momento de maior abertura emocional da semana — as pessoas estão mais reflexivas sobre quem são e o que querem. Domingo tem o mesmo efeito. Conteúdo de identidade nesses dias tem maior engajamento profundo (comentários, compartilhamentos com mensagem) — o tipo de engajamento que forma tribo, não apenas audiência.</p>
+  </div>
+</div>
+
+<!-- 04 PLATAFORMAS -->
+<div class="section" id="s04">
+  <div class="section-header">
+    <div class="section-badge">04</div>
+    <div><div class="section-title">Plataformas</div><div class="section-desc">Onde cada arquétipo vive</div></div>
+  </div>
+
+  <div class="platform-grid">
+    <div class="platform-card">
+      <div class="platform-header">
+        <div class="platform-icon" style="background:#FFF0F5;">📸</div>
+        <div><div class="platform-name">Instagram</div><div class="platform-role">Palco Principal — todos os 6 arquétipos</div></div>
+      </div>
+      <div class="platform-priority pri-primary">Plataforma Primária</div>
+      <ul class="platform-list">
+        <li>Feed: Provocação, O Mapa, Jogo Invisível, Identidade</li>
+        <li>Stories: Bastidores, vida cotidiana, identidade leve</li>
+        <li>Reels: Clips das Provocações e fragmentos do Jogo Invisível</li>
+        <li>Lives: Eventos da tribo e análises ao vivo</li>
+      </ul>
+    </div>
+    <div class="platform-card">
+      <div class="platform-header">
+        <div class="platform-icon" style="background:#F0FFF4;">🎙️</div>
+        <div><div class="platform-name">Podcast</div><div class="platform-role">Amplificador — ver Seção 05</div></div>
+      </div>
+      <div class="platform-priority pri-primary">Plataforma Primária</div>
+      <ul class="platform-list">
+        <li>Fase 1: Entrevistas com Renegados naturais (candidatos à tribo)</li>
+        <li>Fase 2: Histórias de transição (especialista → ativo)</li>
+        <li>Fase 3+: Membros da tribo com resultados comprovados</li>
+        <li>Sempre: transfere autoridade, amplifica o movimento</li>
+      </ul>
+    </div>
+    <div class="platform-card">
+      <div class="platform-header">
+        <div class="platform-icon" style="background:#FFF7ED;">💬</div>
+        <div><div class="platform-name">WhatsApp / Canal</div><div class="platform-role">Núcleo da Tribo</div></div>
+      </div>
+      <div class="platform-priority pri-secondary">Plataforma de Tribo</div>
+      <ul class="platform-list">
+        <li>Pensamentos não filtrados — identidade mais bruta</li>
+        <li>Acesso antes do público geral</li>
+        <li>Comunicação direta com os mais próximos</li>
+        <li>Espaço para os primeiros membros se formarem</li>
+      </ul>
+    </div>
+    <div class="platform-card">
+      <div class="platform-header">
+        <div class="platform-icon" style="background:#F0F9FF;">▶️</div>
+        <div><div class="platform-name">YouTube</div><div class="platform-role">Autoridade Evergreen</div></div>
+      </div>
+      <div class="platform-priority pri-secondary">Plataforma Secundária</div>
+      <ul class="platform-list">
+        <li>Episódios completos do Jogo Invisível</li>
+        <li>O Mapa em formato mais longo e profundo</li>
+        <li>Identidade — a lenda de criação em vídeo completo</li>
+        <li>Conteúdo que funciona por anos sem atualização</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 05 O PODCAST -->
+<div class="section" id="s05">
+  <div class="section-header">
+    <div class="section-badge">05</div>
+    <div><div class="section-title">O Podcast — Estratégia por Fase</div><div class="section-desc">Como o podcast funciona antes e depois da tribo existir</div></div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">O Problema Resolvido</div>
+    <p>O podcast não precisa de membros existentes para funcionar. Precisa de <strong>candidatos naturais à tribo</strong> — pessoas que já vivem o arquétipo do Renegado. A entrevista é, ela mesma, o ato de recrutamento. Quem assiste vê alguém que quer se tornar — e o caminho passa por Sandro.</p>
+  </div>
+
+  <h3>Evolução do Podcast por Fase de Crescimento da Tribo</h3>
+
+  <div class="podcast-phase">
+    <div class="podcast-phase-num">F1</div>
+    <div>
+      <div class="podcast-phase-title">Fase 1 — Antes da Tribo (hoje)</div>
+      <div class="podcast-phase-desc">Entrevistar <strong>Renegados naturais</strong> — pessoas que já saíram do sistema por conta própria. Não são membros, são casos vivos da tese. Empreendedores que saíram do emprego, especialistas que construíram equity, founders que rejeitaram o caminho convencional. Cada entrevistado traz sua própria audiência e passa a referenciar Sandro.</div>
+      <div class="podcast-phase-example">Ex: "Como [Nome] saiu de gerente de banco para sócio de 3 empresas" · "O padre que virou empreendedor" · "A consultora que transformou metodologia em franquia"</div>
+    </div>
+  </div>
+
+  <div class="podcast-phase">
+    <div class="podcast-phase-num">F2</div>
+    <div>
+      <div class="podcast-phase-title">Fase 2 — Primeiras Órbitas (60-120 dias)</div>
+      <div class="podcast-phase-desc">Começar a dar espaço para as <strong>primeiras pessoas que orbitam o conteúdo</strong> — seguidores que estão aplicando a visão e têm histórias relevantes. A transição de "convidado externo" para "alguém que Sandro está acompanhando" é poderosa — sinaliza que a tribo está se formando.</div>
+      <div class="podcast-phase-example">Ex: "Um seguidor que me pediu conselho há 6 meses. Olha onde ele chegou" · Histórias de pessoas no meio da transição — sem resultado final, com processo real</div>
+    </div>
+  </div>
+
+  <div class="podcast-phase">
+    <div class="podcast-phase-num">F3</div>
+    <div>
+      <div class="podcast-phase-title">Fase 3 — Tribo Estruturada (120+ dias)</div>
+      <div class="podcast-phase-desc">Membros com resultados concretos ganham o <strong>palco oficial do movimento</strong>. Agora o podcast é o ato de coroação dentro da hierarquia tribal. Estar no podcast de Sandro vira reconhecimento de status. Outros membros assistem para aprender E para desejar o mesmo reconhecimento.</div>
+      <div class="podcast-phase-example">Ex: "Membro da tribo que fechou primeira participação societária" · Episódios especiais em momentos de evento ou premiação da tribo</div>
+    </div>
+  </div>
+
+  <div class="podcast-phase">
+    <div class="podcast-phase-num">F4</div>
+    <div>
+      <div class="podcast-phase-title">Fase 4 — Efeito de Rede (180+ dias)</div>
+      <div class="podcast-phase-desc">O podcast vira <strong>veículo de amplificação mútua</strong>. Sandro vai nos podcasts dos membros mais avançados. Eles vêm no dele. A autoridade circula na tribo, amplificando todos os lados. O líder eleva os membros, os membros elevam o líder — o ciclo descrito no documento estratégico está completo.</div>
+      <div class="podcast-phase-example">Sandro participa de mastermind de membro avançado · Membro avançado é apresentado no evento público da tribo</div>
+    </div>
+  </div>
+</div>
+
+<!-- 06–09 PLANO DE CONSTRUÇÃO GRAVITACIONAL -->
+<div class="section" id="s06">
+  <div class="section-header">
+    <div class="section-badge phase-b">F1</div>
+    <div><div class="section-title">Campo Gravitacional <span class="new-tag">FASE 1</span></div><div class="section-desc">Dias 0–60 · Criando o sinal que atrai as pessoas certas</div></div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">O Princípio da Fase 1</div>
+    <p>Gravidade se cria com sinal claro + presença consistente. Nessa fase, você não está construindo para ninguém específico. Está emitindo um sinal tão preciso que as pessoas certas se reconhecem nele automaticamente.</p>
+  </div>
+
+  <div class="phase-block ph1">
+    <div class="phase-header">
+      <span class="phase-num">Fase 1</span>
+      <span class="phase-name">Criação do Campo Gravitacional</span>
+      <span class="phase-period">Dias 0–60</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-goal">🎯 Meta: Ter um sinal tão claro que qualquer Renegado natural que se deparar com o conteúdo pense "esse cara é exatamente o que eu estava procurando"</div>
+
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-title">Publicar a Lenda de Criação</div>
+          <div class="phase-action-desc">A história completa de como Sandro saiu do sistema. Em texto longo, em vídeo, em carrossel. Este é o conteúdo mais importante de toda a estratégia — é o que cria identificação profunda antes de qualquer produto existir.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Nomear O Sistema claramente</div>
+          <div class="phase-action-desc">Posts que definem o inimigo de forma visceral. Aspirantes precisam se ver no padrão que está sendo descrito. Quando alguém lê e pensa "é exatamente sobre mim", o sinal está certo.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Publicar os valores como história</div>
+          <div class="phase-action-desc">Fé, família, conservadorismo — não como manifesto, mas como episódios vividos. "A decisão que tomei por causa da minha fé e o que aconteceu." Valores declarados convencem. Valores demonstrados convertem.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Estabelecer cadência inquebrável</div>
+          <div class="phase-action-desc">9 posts por semana, sem exceção. Nessa fase, consistência vale mais do que qualidade perfeita. O algoritmo e as pessoas precisam aprender que Sandro está sempre lá.</div>
+        </div>
+      </div>
+
+      <div class="phase-content">
+        <div class="phase-content-label">Conteúdo Prioritário nesta Fase</div>
+        <div class="phase-content-item"><span class="pci-arch pci-6">Identidade</span>A Lenda de Criação — vídeo completo e versão texto</div>
+        <div class="phase-content-item"><span class="pci-arch pci-1">Provocação</span>As 5 faces do Sistema — uma por semana</div>
+        <div class="phase-content-item"><span class="pci-arch pci-6">Identidade</span>Valores vividos — fé, família, decisões reais</div>
+        <div class="phase-content-item"><span class="pci-arch pci-3">Jogo Invisível</span>Ep. 01 e 02 — estabelece o formato e o nível</div>
+        <div class="phase-content-item"><span class="pci-arch pci-5">A Tribo</span>Podcast com Renegados naturais (F1 do podcast)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s07">
+  <div class="section-header">
+    <div class="section-badge phase-b">F2</div>
+    <div><div class="section-title">Primeiras Órbitas <span class="new-tag">FASE 2</span></div><div class="section-desc">Dias 60–120 · Identificando e ativando os primeiros membros</div></div>
+  </div>
+
+  <div class="phase-block ph2">
+    <div class="phase-header">
+      <span class="phase-num">Fase 2</span>
+      <span class="phase-name">Primeiras Órbitas</span>
+      <span class="phase-period">Dias 60–120</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-goal">🎯 Meta: Identificar as 50–100 pessoas que estão engajando com mais intensidade e criar o primeiro container onde a tribo começa a se formar</div>
+
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-title">Mapear quem está orbitando</div>
+          <div class="phase-action-desc">Quem comenta com profundidade? Quem compartilha consistentemente? Quem manda DM com histórias pessoais? Essas são as pessoas que já se identificaram como Renegados — elas precisam ser ativamente aproximadas.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Criar o primeiro container</div>
+          <div class="phase-action-desc">Um grupo de WhatsApp ou canal privado para as primeiras 50 pessoas. Não é um produto — é um espaço. O convite é exclusivo: "Você tem orbitado o conteúdo. Quero que você seja um dos primeiros Renegados."</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Dar os primeiros palcos</div>
+          <div class="phase-action-desc">Começar a dar visibilidade para histórias de pessoas que estão na transição — não necessariamente com resultado final. O processo já é conteúdo. Isso cria o primeiro efeito de pirâmide: eles referenciam Sandro ao contar a história.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Nomear a identidade coletiva</div>
+          <div class="phase-action-desc">Começar a usar "Renegados" como identidade coletiva nos posts. "Para os Renegados que me acompanham..." Quem se identifica com o nome, se vê como parte de algo maior.</div>
+        </div>
+      </div>
+
+      <div class="phase-content">
+        <div class="phase-content-label">Ações de Conteúdo Adicionais</div>
+        <div class="phase-content-item"><span class="pci-arch pci-2">O Mapa</span>Conteúdo respondendo às dúvidas mais comuns do container privado</div>
+        <div class="phase-content-item"><span class="pci-arch pci-4">Bastidores</span>Primeiras decisões reais da EMPIRE documentadas publicamente</div>
+        <div class="phase-content-item"><span class="pci-arch pci-5">A Tribo</span>Primeiras histórias de pessoas em transição (Fase 2 do podcast)</div>
+        <div class="phase-content-item"><span class="pci-arch pci-6">Identidade</span>Rotina, família, fé — mostrando o que soberania parece na prática</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s08">
+  <div class="section-header">
+    <div class="section-badge phase-b">F3</div>
+    <div><div class="section-title">Estruturação da Tribo <span class="new-tag">FASE 3</span></div><div class="section-desc">Dias 120–180 · Criando a dinâmica interna e o evento público</div></div>
+  </div>
+
+  <div class="phase-block ph3">
+    <div class="phase-header">
+      <span class="phase-num">Fase 3</span>
+      <span class="phase-name">Estruturação da Tribo</span>
+      <span class="phase-period">Dias 120–180</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-goal">🎯 Meta: Criar a hierarquia interna, os rituais, e o primeiro evento que demonstra o poder da tribo para o público externo</div>
+
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-title">Criar hierarquia de status</div>
+          <div class="phase-action-desc">Dentro do container, alguns membros se destacam. Dar a eles reconhecimento formal: nomes, posições, visibilidade extra. Status interno cria ambição produtiva — quem está abaixo quer subir, quem está no topo quer manter.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Primeiro evento público</div>
+          <div class="phase-action-desc">Mesmo que pequeno. Uma live com os membros mais avançados. Um encontro presencial em São Paulo ou Rio. O objetivo é criar imagens e conteúdo que mostram a tribo existindo — isso é o maior recrutador que existe.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Rituais internos</div>
+          <div class="phase-action-desc">Check-in semanal privado. Desafios mensais. Reconhecimento dos resultados. Os rituais criam coesão — é o que transforma um grupo de pessoas em tribo. Acontece em espaço privado, não público.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Membros começam a dar palco ao líder</div>
+          <div class="phase-action-desc">Naturalmente, membros avançados começam a citar Sandro em seus conteúdos. Incentivar isso: conteúdo de resultado que menciona Sandro vira case público, ganha mais visibilidade.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s09">
+  <div class="section-header">
+    <div class="section-badge phase-b">F4</div>
+    <div><div class="section-title">Efeito de Rede <span class="new-tag">FASE 4</span></div><div class="section-desc">Dias 180+ · O ciclo de amplificação se torna autônomo</div></div>
+  </div>
+
+  <div class="phase-block ph4">
+    <div class="phase-header">
+      <span class="phase-num">Fase 4</span>
+      <span class="phase-name">Efeito de Rede</span>
+      <span class="phase-period">Dia 180 em diante</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-goal">🎯 Meta: O ciclo descrito no documento estratégico está completo — membros amplificam o líder, líder amplifica membros, novos membros entram atraídos pela visibilidade da tribo</div>
+
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-title">Sandro nos podcasts dos membros</div>
+          <div class="phase-action-desc">O ciclo de amplificação mútua começa. Sandro aparece nos podcasts e eventos dos membros mais avançados — isso transfere autoridade para eles enquanto amplia o alcance de Sandro.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Audiência como moeda ativa</div>
+          <div class="phase-action-desc">Com audiência consolidada e tribo visível, Sandro começa a usar isso ativamente em negociações de equity. "Eu trago X seguidores engajados e uma comunidade de empreendedores." Isso vale participação.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Evento anual público da tribo</div>
+          <div class="phase-action-desc">O grande evento externo: premiação dos melhores resultados, palcos para membros, demonstração de poder para quem está de fora. Quem assiste de fora quer entrar. Quem está dentro quer mais.</div>
+        </div>
+        <div class="phase-action">
+          <div class="phase-action-title">Novos membros chegam via membros</div>
+          <div class="phase-action-desc">O efeito pirâmide está completo. Membros antigos recrutam novos membros — não por comissão, mas por identidade. "Você é Renegado. Você precisa estar lá dentro." A tribo se reproduz.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 REGRAS -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <div class="section-badge">10</div>
+    <div><div class="section-title">Regras de Execução</div><div class="section-desc">O que nunca pode ser violado</div></div>
+  </div>
+
+  <div style="display:grid;gap:8px;">
+    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🎯</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Todo post começa identificando o arquétipo E o anel</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Qual dos 6 arquétipos? Para qual dos 3 anéis? Se a resposta para o anel for "só especialistas" e não for intencional, reescrever.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🙏</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Identidade é história, não manifesto</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Valores declarados convencem. Valores demonstrados através de episódios vividos convertem. Nunca escrever "eu acredito em X". Escrever "quando tomei a decisão Y, o que me guiou foi Z".</div></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">⚡</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Provocação prioriza o Anel 1</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Provocações muito filtradas para especialistas não geram volume de audiência. 2 das 3 provocações semanais devem funcionar para quem está empregado e se sente preso. 1 pode ser mais específica para empreendedores.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🎙️</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Podcast começa com Renegados naturais, não membros</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Antes da tribo existir, o podcast entrevista candidatos naturais — pessoas que já vivem a tese. A entrevista é recrutamento. O entrevistado passa a referenciar Sandro para a própria audiência.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">⚠️</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Nenhum conteúdo político explícito</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">O Sistema é o inimigo — enquadrado como condicionamento, não como partido. Os valores aparecem como coerência de vida, não como bandeira de campanha.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;padding:14px 0;align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--purple-tint);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">📈</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Respeitar as fases — não pular etapas</div><div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Não dar palco a "membros da tribo" antes da tribo existir — isso parece artificial. Não fazer evento público antes de ter quem apareça. Cada fase tem seu conteúdo natural. Forçar a Fase 4 na Fase 1 quebra a credibilidade.</div></div>
+    </div>
+  </div>
+
+  <div class="wa-test">
+    <div class="wa-icon">💬</div>
+    <div>
+      <div class="wa-title">O Teste Final — Antes de Publicar</div>
+      <div class="wa-desc">Uma pergunta, sem exceção:</div>
+      <div class="wa-rule">"Um empreendedor inteligente encaminharia isso num grupo estratégico?"</div>
+      <div class="wa-desc" style="margin-top:7px;">Se não — reescreve. Se não sabe — reescreve.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Ideias de Conteúdo: ver arquivo ideias-de-conteudo.html -->
+
+
+<div class="closing">
+  <div class="closing-line">
+    A tribo não é construída.<br>
+    É atraída.<br><br>
+    <em>O campo gravitacional é criado pelo sinal — e o sinal mais forte é quem você realmente é.</em>
+  </div>
+  <div class="closing-badge">
+    Sandro San · Milionário Renegado · Linha Editorial V2 · 2025 · EMPIRE
+  </div>
+</div>
+
+</div>
+</body>
+</html>
