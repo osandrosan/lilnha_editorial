@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideias de Conteúdo — Sandro San · Milionário Renegado</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:#8A05BE;--purple-dark:#3D0D52;--purple-soft:#C96DDE;
+    --purple-tint:#F5EDFB;--purple-tint2:#EDD9F7;--purple-border:#E4C8F2;
+    --white:#FFFFFF;--surface:#FAFAFA;--surface2:#F5F5F5;
+    --text-primary:#1D0B2D;--text-body:#3D3548;--text-muted:#74637D;--text-light:#A693AE;
+    --border:#E8E3ED;--border-light:#F0EBF4;
+    --shadow-sm:0 1px 3px rgba(61,13,82,0.06);
+    --radius-sm:8px;--radius-md:12px;--radius-full:999px;
+    --c1:#7C3AED;--c1t:#F5F3FF;--c1b:#DDD6FE;
+    --c2:#0369A1;--c2t:#F0F9FF;--c2b:#BAE6FD;
+    --c3:#B45309;--c3t:#FFFBEB;--c3b:#FDE68A;
+    --c4:#065F46;--c4t:#ECFDF5;--c4b:#A7F3D0;
+    --c5:#BE185D;--c5t:#FDF2F8;--c5b:#FBCFE8;
+    --c6:#1D4ED8;--c6t:#EFF6FF;--c6b:#BFDBFE;
+    --s-todo:#FEF9C3;--s-todo-t:#854D0E;
+    --s-doing:#DBEAFE;--s-doing-t:#1E40AF;
+    --s-done:#DCFCE7;--s-done-t:#14532D;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--white);color:var(--text-body);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .page{max-width:1140px;margin:0 auto;padding:0 36px 80px;}
+  .header{background:var(--purple-dark);margin:0 -36px;padding:44px 36px 36px;position:relative;overflow:hidden;margin-bottom:32px;}
+  .header::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(138,5,190,0.2);pointer-events:none;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius-full);padding:4px 13px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:14px;position:relative;z-index:1;}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--purple-soft);}
+  .h-title{font-size:clamp(26px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-0.8px;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .h-title .accent{color:var(--purple-soft);}
+  .h-sub{font-size:13.5px;color:rgba(255,255,255,0.48);margin-bottom:24px;position:relative;z-index:1;}
+  .h-ref{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-full);padding:5px 14px;font-size:11px;color:rgba(255,255,255,0.48);position:relative;z-index:1;}
+  .h-ref strong{color:rgba(255,255,255,0.78);}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px;}
+  .stat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:13px 15px;}
+  .stat-n{font-size:24px;font-weight:800;color:var(--text-primary);letter-spacing:-0.4px;}
+  .stat-l{font-size:11px;color:var(--text-muted);margin-top:2px;}
+  .legend{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:20px;}
+  .legend-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:10px;}
+  .legend-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .li{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-body);}
+  .ld{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+  .lsep{width:1px;height:14px;background:var(--border);margin:0 6px;}
+  .instr{background:var(--purple-tint);border:1px solid var(--purple-border);border-radius:var(--radius-md);padding:13px 18px;margin-bottom:24px;}
+  .instr-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:6px;}
+  .instr p{font-size:13px;color:var(--purple-dark);line-height:1.65;margin:0;}
+  .instr code{background:rgba(138,5,190,0.1);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:11.5px;color:var(--purple);}
+  .cat-nav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:28px;}
+  .cat-nav a{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:var(--radius-full);font-size:11px;font-weight:600;text-decoration:none;transition:all 0.15s;color:rgba(255,255,255,0.88);}
+  .cat-nav a:hover{opacity:0.8;transform:translateY(-1px);}
+  .cat{margin-bottom:36px;}
+  .cat-header{display:flex;align-items:center;gap:12px;margin-bottom:13px;}
+  .cat-badge{color:white;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:var(--radius-full);white-space:nowrap;}
+  .cat-desc{font-size:12.5px;color:var(--text-muted);}
+  .cat-line{height:1px;flex:1;background:var(--border);}
+  .cat-count{font-size:11px;font-weight:700;color:var(--text-light);white-space:nowrap;}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl{width:100%;border-collapse:collapse;font-size:13px;}
+  .tbl thead tr{background:var(--surface2);}
+  .tbl th{padding:9px 13px;text-align:left;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border);white-space:nowrap;}
+  .tbl tbody tr{border-bottom:1px solid var(--border-light);transition:background 0.1s;}
+  .tbl tbody tr:last-child{border-bottom:none;}
+  .tbl tbody tr:hover{background:var(--purple-tint);}
+  .tbl td{padding:11px 13px;vertical-align:top;}
+  .col-t{width:36%}.col-a{width:13%}.col-r{width:13%}.col-f{width:9%}.col-fmt{width:16%}.col-s{width:13%}
+  .ititle{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:2px;line-height:1.35;}
+  .ihook{font-size:11.5px;color:var(--text-muted);font-style:italic;line-height:1.45;}
+  .stag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:1px 6px;border-radius:3px;margin-bottom:4px;}
+  .at{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:var(--radius-full);white-space:nowrap;}
+  .at-1{background:var(--c1t);color:var(--c1)}.at-2{background:var(--c2t);color:var(--c2)}.at-3{background:var(--c3t);color:var(--c3)}.at-4{background:var(--c4t);color:var(--c4)}.at-5{background:var(--c5t);color:var(--c5)}.at-6{background:var(--c6t);color:var(--c6)}
+  .rt{display:inline-flex;font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--radius-full);margin:1px 1px 0 0;white-space:nowrap;}
+  .rt-1{background:#FEF3C7;color:#92400E}.rt-2{background:#DCFCE7;color:#14532D}.rt-3{background:var(--purple-tint2);color:var(--purple-dark)}
+  .ft{font-size:11px;font-weight:700;color:var(--purple);}
+  .fmtt{font-size:12px;color:var(--text-body);line-height:1.5;}
+  .st{display:inline-flex;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--radius-full);white-space:nowrap;}
+  .st-todo{background:var(--s-todo);color:var(--s-todo-t)}.st-doing{background:var(--s-doing);color:var(--s-doing-t)}.st-done{background:var(--s-done);color:var(--s-done-t)}
+  .sem-row td{background:#FFFBF0;}
+  .sem-row:hover td{background:#FEF3C7 !important;}
+  .add-box{border:2px dashed var(--border);border-radius:var(--radius-md);padding:28px;text-align:center;margin-top:12px;}
+  .add-icon{font-size:22px;margin-bottom:6px;}
+  .add-title{font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:3px;}
+  .add-desc{font-size:12.5px;color:var(--text-muted);}
+  .footer{background:var(--purple-dark);margin:40px -36px 0;padding:28px 36px;text-align:center;}
+  .footer p{font-size:12px;color:rgba(255,255,255,0.42);font-style:italic;}
+  @media(max-width:768px){.page{padding:0 16px 60px;}.header,.footer{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;}.stats{grid-template-columns:1fr 1fr 1fr;}.tbl{display:block;overflow-x:auto;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Milionário Renegado · EMPIRE</div>
+  <h1 class="h-title">Ideias de <span class="accent">Conteúdo</span></h1>
+  <p class="h-sub">Banco de temas categorizados · 14 categorias · Crescimento contínuo</p>
+  <div class="h-ref"><strong>Ref:</strong> Linha Editorial V2 · Documento de Marca V4.0</div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">101</div><div class="stat-l">Temas mapeados</div></div>
+  <div class="stat"><div class="stat-n">14</div><div class="stat-l">Categorias</div></div>
+  <div class="stat"><div class="stat-n">99</div><div class="stat-l">A fazer</div></div>
+  <div class="stat"><div class="stat-n">8</div><div class="stat-l">Sem categoria</div></div>
+  <div class="stat"><div class="stat-n">2</div><div class="stat-l">Em progresso</div></div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">Legenda — Arquétipos · Anéis · Status</div>
+  <div class="legend-row">
+    <div class="li"><div class="ld" style="background:var(--c1);"></div>Provocação</div>
+    <div class="li"><div class="ld" style="background:var(--c2);"></div>O Mapa</div>
+    <div class="li"><div class="ld" style="background:var(--c3);"></div>Jogo Invisível</div>
+    <div class="li"><div class="ld" style="background:var(--c4);"></div>Bastidores</div>
+    <div class="li"><div class="ld" style="background:var(--c5);"></div>A Tribo</div>
+    <div class="li"><div class="ld" style="background:var(--c6);"></div>Identidade</div>
+    <div class="lsep"></div>
+    <div class="li"><span class="rt rt-1">A1</span>Aspirantes</div>
+    <div class="li"><span class="rt rt-2">A2</span>Empreendedores</div>
+    <div class="li"><span class="rt rt-3">A3</span>Especialistas</div>
+    <div class="lsep"></div>
+    <div class="li"><span class="st st-todo">A Fazer</span></div>
+    <div class="li"><span class="st st-doing">Em Progresso</span></div>
+    <div class="li"><span class="st st-done">Publicado</span></div>
+  </div>
+</div>
+
+<div class="instr">
+  <div class="instr-label">Como Adicionar</div>
+  <p>Copie uma linha <code>&lt;tr&gt;</code> dentro do <code>&lt;tbody&gt;</code> da categoria e edite. Nova categoria: copie um bloco inteiro e ajuste o <code>id</code>, cor e título. Ao publicar, troque <code>st-todo</code> por <code>st-done</code>. Itens sem categoria ficam com fundo laranja e a tag <code>⚠</code>.</p>
+</div>
+
+<div class="cat-nav">
+  <a href="#c-litvin"    style="background:#1E1B4B;">Rich Litvin</a>
+  <a href="#c-kennedy"   style="background:#1A3A2A;">Dan Kennedy</a>
+  <a href="#c-valores"   style="background:#78350F;">Valores Católicos</a>
+  <a href="#c-jogo"      style="background:#0F172A;">O Jogo Invisível</a>
+  <a href="#c-historias" style="background:#4A1D96;">Pequenas Histórias</a>
+  <a href="#c-crime"     style="background:#7F1D1D;">Analisando o Crime</a>
+  <a href="#c-superacao" style="background:#14532D;">Cases de Superação</a>
+  <a href="#c-teses"     style="background:#92400E;">Teses e Provocações</a>
+  <a href="#c-eco"       style="background:#1E3A5F;">Ecossistemas</a>
+  <a href="#c-tendencia" style="background:#134E4A;">Tendências</a>
+  <a href="#c-lifestyle" style="background:#1F2937;">Vida de Founder</a>
+  <a href="#c-ia"        style="background:#1E3A1E;">IA e Novo Jogo</a>
+  <a href="#c-news"      style="background:#3B0764;">Newsletters</a>
+  <a href="#c-sem"       style="background:#6B7280;">Sem Categoria</a>
+</div>
+
+<!-- ═══ 1. RICH LITVIN ═══ -->
+<div class="cat" id="c-litvin">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#1E1B4B;">Rich Litvin</div>
+    <div class="cat-desc">Alta Performance · Liderança · Jogo Interno · Conselheiro de Confiança</div>
+    <div class="cat-line"></div><div class="cat-count">5 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">O líder que não corre atrás de clientes</div><div class="ihook">Atração vs. perseguição — a posição certa faz os clientes chegarem primeiro</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels curto</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O jogo interno antes do jogo externo</div><div class="ihook">Por que líderes que não trabalham o interno chegam no topo e desmoronam</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Story pessoal</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Jogar um jogo maior</div><div class="ihook">A diferença entre crescer dentro de um jogo e perceber que você está no jogo errado</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Como escolher seus clientes em vez de aceitar qualquer um</div><div class="ihook">O critério que transforma você de prestador em parceiro estratégico</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Alta performance não é velocidade — é clareza</div><div class="ihook">O maior erro de quem quer performar mais é acelerar sem saber exatamente o quê</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels curto</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 2. DAN KENNEDY ═══ -->
+<div class="cat" id="c-kennedy">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#1A3A2A;">Dan Kennedy</div>
+    <div class="cat-desc">Dinheiro · Autoridade · Marketing Direto · Posicionamento</div>
+    <div class="cat-line"></div><div class="cat-count">6 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">Cobrar o que você vale sem pedir desculpa</div><div class="ihook">Resistência ao preço é sempre problema de identidade — nunca de mercado</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O erro de competir por preço</div><div class="ihook">Como sair da corrida para o fundo e se posicionar onde o preço é irrelevante</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Magnetismo: fazer clientes correrem atrás de você</div><div class="ihook">A diferença entre marketing de atração e prospecção ativa — autoridade é a chave</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Por que as pessoas ricas pensam diferente sobre dinheiro</div><div class="ihook">Não é educação financeira — é um conjunto de crenças radicalmente diferente sobre o que dinheiro é</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Posicionamento como autoridade — não como prestador</div><div class="ihook">O que muda quando você para de vender serviço e começa a ocupar uma posição</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Seu tempo tem preço — e você está cobrando errado</div><div class="ihook">Como a precificação do tempo revela o que você acredita sobre seu próprio valor</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 3. VALORES CATÓLICOS ═══ -->
+<div class="cat" id="c-valores">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#78350F;">Valores Católicos</div>
+    <div class="cat-desc">Virtudes · Família · Fé como Bússola de Decisão</div>
+    <div class="cat-line"></div><div class="cat-count">6 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">Prudência — a virtude que protege seu patrimônio</div><div class="ihook">Como a prudência se traduz em decisões que evitam os erros mais caros</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Fortaleza — o que a fé tem a ver com coragem empresarial</div><div class="ihook">As decisões que mais medo tive — e o que me sustentou quando tomei</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Vídeo pessoal</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Família como missão — não como custo de oportunidade</div><div class="ihook">O sistema convenceu que família compete com ambição. Isso é mentira — e tem agenda por trás</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Temperança — por que o líder sóbrio vai mais longe</div><div class="ihook">Moderação não é fraqueza. É o que distingue quem constrói de quem explode</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Construir riqueza sem trair seus valores</div><div class="ihook">O sistema apresenta uma falsa escolha: rico ou íntegro. As duas coisas são compatíveis.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Reels · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">A oração como ritual de liderança</div><div class="ihook">Não espiritualidade performática. O hábito concreto que antecede as decisões mais importantes</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Story · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 4. O JOGO INVISÍVEL ═══ -->
+<div class="cat" id="c-jogo">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#0F172A;">📺 O Jogo Invisível</div>
+    <div class="cat-desc">Série · Análise de Cases · Lente Estrutural + Psicológica · 5 Movimentos</div>
+    <div class="cat-line"></div><div class="cat-count">11 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="stag" style="background:#DBEAFE;color:#1E40AF;">📺 SÉRIE · EP.01</div><div class="ititle">Theranos / Elizabeth Holmes — a vítima do ambiente que ela mesma criou</div><div class="ihook">Roteiro aprovado. A que ponto a narrativa substitui o produto?</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo longo · Podcast</span></td><td><span class="st st-doing">Em Progresso</span></td></tr>
+      <tr><td><div class="stag" style="background:#DBEAFE;color:#1E40AF;">📺 SÉRIE · EP.02</div><div class="ititle">WeWork / Adam Neumann — o founder que acreditou na própria narrativa</div><div class="ihook">Roteiro aprovado. Confundir audiência com ativo real.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo longo · Podcast</span></td><td><span class="st st-doing">Em Progresso</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">JP Morgan — o poder silencioso por trás do banco mais influente do mundo</div><div class="ihook">Notícia → princípio invisível → aplicação para o founder que lê</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">David Beckham — como um jogador se tornou um empire builder</div><div class="ihook">O modelo de negócios por trás do ex-jogador mais estratégico do mundo</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Reels · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">Assis Chateaubriand — como ele criou um império de mídia do zero no Brasil</div><div class="ihook">O maior dono de mídia brasileiro que a maioria nunca estudou</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F3</span></td><td><span class="fmtt">Vídeo · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">Madoff / Murdoch — como se constrói (e destrói) um império de mídia</div><div class="ihook">O modelo que funcionou e o ponto exato onde tudo desmoronou</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">O que eu faria para concorrer com a MLS do Flávio Augusto</div><div class="ihook">Análise estratégica: visão, produto, comunidade e modelo de negócio</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">Os 5 atletas mais ricos do mundo — e como ganham de verdade</div><div class="ihook">O modelo de negócio por trás da riqueza que não vem do esporte</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Reels · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#E5E7EB;color:#374151;">📺 SÉRIE</div><div class="ititle">Ronaldo — da favela ao maior empreendedor do futebol</div><div class="ihook">Como monetizar audiência e oportunidades ocultas. Ref. Fernando Miranda.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Reels · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">"As pessoas são o maior ativo" — Jim Collins: erro contra-intuitivo</div><div class="ihook">"As pessoas CERTAS são o maior ativo." Twist em uma crença popular que parece verdade mas é incompleta.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post curto · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Sherlock Holmes e o cão que não latiu — o que a ausência revela</div><div class="ihook">O "curioso incidente" de Estrela de Prata: sinais invisíveis de um negócio são mais reveladores que os visíveis</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Long-form · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 5. PEQUENAS HISTÓRIAS ═══ -->
+<div class="cat" id="c-historias">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#4A1D96;">📖 Pequenas Histórias</div>
+    <div class="cat-desc">Série · 30 Anos Empreendendo · Estilo Matheus Beirão · Histórias Pessoais com Aprendizado</div>
+    <div class="cat-line"></div><div class="cat-count">9 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Comprei a ZARDO sem olhar um único documento — a história daquela noite</div><div class="ihook">A decisão mais improvável que tomei. O que estava em jogo. O que aprendi.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo curto · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Minha primeira venda High Ticket</div><div class="ihook">O dia em que cobrei mais do que achava que merecia — e o que mudou depois disso</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo curto · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">O dia em que montei um mastermind com Jober Chaves</div><div class="ihook">Como uma reunião improvável mudou minha visão sobre quem são os clientes certos</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Quando entrevistei o Érico Rocha — e o que aprendi que não estava no roteiro</div><div class="ihook">Bastidores de uma entrevista que mudou minha trajetória no digital</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Long-form · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">13 lições depois de comprar e vender dezenas de empresas</div><div class="ihook">O que 30 anos de M&amp;A informal ensinam que nenhum MBA ensina</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Quebrei 3 vezes — o que cada quebra me ensinou</div><div class="ihook">Não é sobre fracasso. É sobre o que você vê quando perde tudo que construiu.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo pessoal · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Por que não fiz faculdade — e como isso me custou 10 anos</div><div class="ihook">A lenda de criação. A experiência que vence o diploma. (Ref. Erick Shibata)</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Vídeo pessoal · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">Confissões de um mentor High Ticket</div><div class="ihook">O que ninguém conta sobre estar do lado de cima. Medos, erros e o que aprendi.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#EDE9FE;color:#4C1D95;">📖 SÉRIE</div><div class="ititle">A Fênix: você pode reviver depois de tudo</div><div class="ihook">Para empreendedores no fogo. O que a falência ensina que o sucesso nunca ensina.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Palestra · Vídeo longo</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 6. ANALISANDO O CRIME ═══ -->
+<div class="cat" id="c-crime">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#7F1D1D;">🔍 Analisando o Crime</div>
+    <div class="cat-desc">Série · Decisões Erradas que Destruíram Negócios · Lições do Fracasso Alheio</div>
+    <div class="cat-line"></div><div class="cat-count">6 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">Captei investimento e virei empregado dos meus investidores</div><div class="ihook">A armadilha que a maioria não vê antes de assinar: diluição, controle, e o fim da liberdade</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">Quando ter muito dinheiro afundou o negócio</div><div class="ihook">Muita gente acha que dinheiro resolve — na verdade é quando os problemas começam de verdade</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Reels · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">Faturamento alto com empresa que não vale nada</div><div class="ihook">O empreendedor que confundiu receita com patrimônio — e descobriu tarde demais</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">O founder que escondeu o problema até não ter mais solução</div><div class="ihook">O erro psicológico mais comum: preferir a ilusão de controle à realidade</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">Crescer rápido demais destruiu o modelo de negócio</div><div class="ihook">A escala sem estrutura é um crime que o fundador comete contra si mesmo</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#FEE2E2;color:#991B1B;">🔍 SÉRIE</div><div class="ititle">Talvez o problema não seja tráfego, funil ou produto — é o modelo</div><div class="ihook">O erro de otimizar as partes sem enxergar que o sistema inteiro está errado</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 7. CASES DE SUPERAÇÃO ═══ -->
+<div class="cat" id="c-superacao">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#14532D;">🏆 Cases de Superação</div>
+    <div class="cat-desc">Série · Empreendedores que Faliram Antes de Ter Sucesso · A maioria falhou</div>
+    <div class="cat-line"></div><div class="cat-count">4 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="stag" style="background:#DCFCE7;color:#14532D;">🏆 SÉRIE</div><div class="ititle">Empreendedores que faliram antes de ter sucesso — e a maioria falhou</div><div class="ihook">O ponto aqui é que a maioria fracassou. O que separou quem voltou de quem ficou pelo caminho.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#DCFCE7;color:#14532D;">🏆 SÉRIE</div><div class="ititle">Esse cara ficou bilionário recolhendo lixo</div><div class="ihook">A história do negócio improvável que se tornou referência. Lições do livro dele.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Carrossel · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#DCFCE7;color:#14532D;">🏆 SÉRIE</div><div class="ititle">A virada que ninguém esperava — perdeu tudo e voltou maior</div><div class="ihook">O fracasso como rito de passagem. O que muda em quem volta depois de perder tudo.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo pessoal · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#DCFCE7;color:#14532D;">🏆 SÉRIE</div><div class="ititle">Histórias de empreendedores desacreditados que superaram para ter reconhecimento</div><div class="ihook">A narrativa do underdog — mais poderosa do que qualquer pitch de sucesso</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Vídeo · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 8. TESES E PROVOCAÇÕES ═══ -->
+<div class="cat" id="c-teses">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#92400E;">⚡ Teses e Provocações</div>
+    <div class="cat-desc">Milionário Renegado · Visão de Mundo · O Sistema · Crenças a Destruir</div>
+    <div class="cat-line"></div><div class="cat-count">12 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">O marketing da inveja — como a ostentação virou a principal estratégia do digital</div><div class="ihook">A ostentação como ferramenta de venda. Por que funciona. Por que é uma armadilha para quem compra.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Mercadores da fé — como pessoas usam Deus para vender mentorias sem parecer mercenários</div><div class="ihook">O universo da nova era perdendo mercado para quem soube usar a fé como estratégia de branding</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Empreendedores seriais são mal vistos — e por que isso está errado</div><div class="ihook">O preconceito contra quem começa múltiplos negócios. Os desafios de ser criativo num mundo que valoriza especialização.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Ficar rico e chato — o preço do sucesso que ninguém conta</div><div class="ihook">O isolamento que vem com o crescimento. Por que os ricos não conseguem mais falar com os amigos antigos.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Muita gente acha que dinheiro resolve — na verdade é quando os problemas começam</div><div class="ihook">A ilusão de que investimento externo ou receita alta resolve problemas estruturais do negócio</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">A estratégia da novela — como transformar seu Instagram numa novela</div><div class="ihook">Conquistas + resultados + personagem atraente + haters + inimigo comum = loop de atenção infinito</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Pensar grande ou pequeno dá o mesmo trabalho — com resultados radicalmente diferentes</div><div class="ihook">Pensar grande te liberta dos detalhes insignificantes. Pensar pequeno te prende neles.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels curto</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Será que preciso comprar uma Porsche para as pessoas acreditarem que tenho resultado?</div><div class="ihook">A narrativa da EMPIRE: construir relevância sem apelar para a ostentação</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Vídeo pessoal · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">A armadilha das rodadas de investimento</div><div class="ihook">Como captar rodadas te dilui, te prende e transforma no empregado dos seus próprios investidores</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O sucesso do conteúdo não é o formato — é quem conta</div><div class="ihook">Igual contar piada: às vezes ninguém ri não é por causa da piada, é por causa de quem conta</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Porque pessoas muito criativas sofrem mais de burnout</div><div class="ihook">Os desafios de sempre estar começando algo novo. O custo psicológico de ser empreendedor serial.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">A CEO da Mind disse que influenciadores não ganham dinheiro — e ela tem razão</div><div class="ihook">Audiência sem modelo de negócio é trabalho voluntário com alcance. O que separa influência de riqueza.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 9. ECOSSISTEMAS ═══ -->
+<div class="cat" id="c-eco">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#1E3A5F;">🏛️ Ecossistemas de Negócios Seriais</div>
+    <div class="cat-desc">Análise de Impérios · Modelos de Negócio · Empreendedores Seriais</div>
+    <div class="cat-line"></div><div class="cat-count">8 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">O modelo do Tony Robbins — o ecossistema por trás do maior coach do mundo</div><div class="ihook">Livros, eventos, produtos digitais, investimentos, franquias. A engrenagem que poucos analisam.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Carrossel · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O modelo do T. Harv Eker — do seminário ao sistema</div><div class="ihook">Como transformou um único método em ecossistema de produtos, licenciamentos e franquias</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O modelo do Coco Bambu — como um restaurante virou marca</div><div class="ihook">O movimento de serviço para ecossistema. O que qualquer consultor pode aprender com isso.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Carrossel · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O modelo do Flávio Augusto — da Wise Up à MLS</div><div class="ihook">Como ele replicou a lógica de tribo e franquia do físico para o digital</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Vídeo · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Influenciadores que monetizam via licenciamento, franquias e equity</div><div class="ihook">Como criadores de conteúdo transformaram audiência em participação empresarial</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Carrossel · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Análise de empreendedores seriais e seus múltiplos negócios</div><div class="ihook">Mapear um empreendedor serial completo: o que conecta, o que alimenta o quê, onde está o valor</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O modelo do Warren Buffett aplicado para empreendedores de conhecimento</div><div class="ihook">Alocar capital intelectual como Buffett aloca capital financeiro: em ativos que geram retorno sem presença</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Long-form · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Conectar ARTE com NEGÓCIO — os melhores empreendedores pensam como artistas</div><div class="ihook">A criatividade como vantagem estrutural. Empreendedores seriais na intersecção das duas áreas.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 10. TENDÊNCIAS ═══ -->
+<div class="cat" id="c-tendencia">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#134E4A;">📊 Tendências e Mercado</div>
+    <div class="cat-desc">Análise de Cenário · IA · Comportamento · Oportunidades Ocultas</div>
+    <div class="cat-line"></div><div class="cat-count">7 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">Como a IA vai impactar a produção de conteúdo em 2026</div><div class="ihook">O que muda para creators, consultores e especialistas — e quem vai sobrar</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Por que o excesso de conteúdo está gerando uma legião de novas agências</div><div class="ihook">Quanto mais conteúdo existe, mais difícil é se destacar — e mais necessário é o especialista</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O aumento do CAC está forçando empreendedores a buscar leads orgânicos</div><div class="ihook">Quando o custo de aquisição sobe, quem tem audiência orgânica ganha vantagem desproporcional</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Post · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Como vender para curadores — análise de arquétipos de comprador</div><div class="ihook">Curadores decidem diferente. O que os move. Como criar oferta para eles.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Long-form · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Creators estão perdendo mercado sem perceber</div><div class="ihook">O modelo de creator sem estrutura empresarial está chegando ao teto</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Eduardo Moreira: política + notícias + curso no mesmo lugar — o modelo analisado</div><div class="ihook">Como ele juntou posicionamento, análise crítica e produto numa única narrativa coerente</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Long-form · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Análise comparativa de perfis: cruzar estratégias de conteúdo de concorrentes</div><div class="ihook">Trazer o contraintuitivo — o que realmente funciona vs. o que parece que funciona</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Long-form · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 11. VIDA DE FOUNDER ═══ -->
+<div class="cat" id="c-lifestyle">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#1F2937;">🌅 Vida de Founder</div>
+    <div class="cat-desc">Lifestyle · Rotina · Família · Tempo · O Que Soberania Parece na Prática</div>
+    <div class="cat-line"></div><div class="cat-count">7 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">Tempo vale mais do que dinheiro</div><div class="ihook">O dinheiro vai e vem. O tempo só vai. A filosofia por trás de recusar agendas cheias.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Post · Reels · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Minha rotina como founder-alocador — o que entrou e o que saiu da agenda</div><div class="ihook">Bastidores reais: blocos de pensamento profundo, poucas reuniões de alto valor, espiritualidade, exercício</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Story · Reels · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Família: minha maior riqueza não é o que você pensa</div><div class="ihook">Foto com filhos, netos, esposa. Texto sobre o que penso sobre família vs. como o mundo moderno trata o assunto.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Post foto · Story · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Como a fé guia minhas decisões de negócio</div><div class="ihook">Missa, terço, oração. Não como performance — como a bússola real por trás das escolhas mais difíceis.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Story · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Crítica ao luxo excessivo e à ostentação</div><div class="ihook">O poder silencioso que não precisa de Porsche para ser real. Charuto, uísque e qualidade de vida.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Story · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Trabalhando em casa com piscina ao fundo — o que isso realmente representa</div><div class="ihook">Não é lifestyle de rico. É a prova de que soberania não precisa de escritório para existir.</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Foto · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Natureza, caminhada, tempo para pensar — preciso ter tempo para pensar</div><div class="ihook">Tempo livre é matéria-prima das melhores decisões. O founder que não para, não enxerga.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Foto · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 12. IA E O NOVO JOGO ═══ -->
+<div class="cat" id="c-ia">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#1E3A1E;">🤖 IA e O Novo Jogo</div>
+    <div class="cat-desc">Inteligência Artificial como Alavanca · Consultoria · Escalabilidade</div>
+    <div class="cat-line"></div><div class="cat-count">6 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ititle">IA para High Ticket — o diferencial que poucos estão usando certo</div><div class="ihook">Não é ferramenta de produtividade. É alavanca de posicionamento para quem já tem método.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">IA vai separar empreendedores de operadores nos próximos 2 anos</div><div class="ihook">Quem sabe pensar + usar IA vai operar como empresa. Quem só executa vai ser substituído.</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Post · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">High Ticket ou Low Ticket? — a analogia da concessionária de carros</div><div class="ihook">Se você vai criar conteúdo para vender, por que escolheria vender uma Fiat Uno?</div></td><td><span class="at at-1">Provocação</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F1</span></td><td><span class="fmtt">Reels · Post</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Como usar IA para escalar consultoria sem aumentar horas</div><div class="ihook">O robô estrategista como leverage. Não substitui o especialista — multiplica o que ele já sabe.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">O robô que cria roteiros de vendas irresistíveis</div><div class="ihook">Bastidores: como automatizei parte da consultoria sem perder qualidade</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Reels · Podcast</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="ititle">Como gerei 1 milhão com um bug do Instagram — e o que isso ensina sobre sistemas</div><div class="ihook">A estratégia de mensagens que aumentou views e converteu mais. O acidente que virou método.</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F1+F2</span></td><td><span class="fmtt">Long-form · Reels</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 13. NEWSLETTERS ═══ -->
+<div class="cat" id="c-news">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#3B0764;">📰 Newsletters e Perfis</div>
+    <div class="cat-desc">Mestres do Alto Valor · O Estrategista · Conteúdo para Canais Próprios</div>
+    <div class="cat-line"></div><div class="cat-count">5 temas</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Tema / Gancho</th><th class="col-a">Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Formato</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr><td><div class="stag" style="background:#F3E8FF;color:#3B0764;">📰 MESTRES DO ALTO VALOR</div><div class="ititle">A arte de ver o invisível — primeiro post/carrossel do perfil MAV</div><div class="ihook">Baseado em Rich Litvin. Como o conselheiro de confiança enxerga o que o cliente não consegue ver.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Carrossel · Newsletter</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#F3E8FF;color:#3B0764;">📰 MESTRES DO ALTO VALOR</div><div class="ititle">Série semanal: como ser líder e conselheiro de confiança</div><div class="ihook">Textos baseados em Rich Litvin. Formato revista MAV estilo Milionário Renegado.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Newsletter · Carrossel</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#F3E8FF;color:#3B0764;">📰 O ESTRATEGISTA</div><div class="ititle">Dica diária rápida — formato Mozi Minute</div><div class="ihook">Newsletter curta, uma dica, leitura em 60 segundos. Ref: Rich Litvin + Models Method.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Newsletter diária</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#F3E8FF;color:#3B0764;">📰 O ESTRATEGISTA</div><div class="ititle">Sexo e negócios — Rich Litvin e a conexão entre poder pessoal e profissional</div><div class="ihook">Adaptação do artigo richlitvin.com/sex-business para o contexto do Estrategista</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Newsletter · Long-form</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+      <tr><td><div class="stag" style="background:#F3E8FF;color:#3B0764;">📰 GERAL</div><div class="ititle">Pe. Paulo — extrair e montar texto para carrossel de domingo</div><div class="ihook">Conteúdo espiritual de alto valor adaptado para o formato visual. Stories e feed de domingo.</div></td><td><span class="at at-6">Identidade</span></td><td><span class="rt rt-1">A1</span><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Carrossel · Story</span></td><td><span class="st st-todo">A Fazer</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ═══ 14. SEM CATEGORIA ═══ -->
+<div class="cat" id="c-sem">
+  <div class="cat-header">
+    <div class="cat-badge" style="background:#6B7280;">🔎 Sem Categoria / A Explorar</div>
+    <div class="cat-desc">Ideias que não se encaixam ainda no framework ou precisam de mais desenvolvimento antes de virar conteúdo</div>
+    <div class="cat-line"></div><div class="cat-count">8 itens</div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th class="col-t">Ideia / Conceito</th><th class="col-a">Possível Arquétipo</th><th class="col-r">Anel</th><th class="col-f">Função</th><th class="col-fmt">Próximo Passo</th><th class="col-s">Status</th></tr></thead>
+    <tbody>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Negócio Boutique</div><div class="ihook">Conceito mencionado como tese mas ainda sem direção editorial clara. Definir o que é e como se diferencia de negócio de serviço convencional.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Desenvolver conceito antes de criar conteúdo</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">HTC — Sociedade do Alto Valor</div><div class="ihook">Produto (licença para usar métodos e materiais). Não é conteúdo diretamente. Pode gerar conteúdo sobre o modelo de ecossistema e como estruturo meu negócio.</div></td><td><span class="at at-4">Bastidores</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Transformar em conteúdo de "como estruturo meu ecossistema"</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Criador da teoria do Good Marketing / Bad Marketing</div><div class="ihook">Ideia de posicionamento como criador de teoria. Precisa ser desenvolvida: o que é Good vs. Bad Marketing na visão de Sandro especificamente?</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Desenvolver a teoria antes de publicar</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Venda e transferência de energia</div><div class="ihook">Venda como transferência de estado emocional. Conecta com psicologia de vendas mas precisa de ângulo e história concretos para virar conteúdo.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Definir um caso que ilustre o conceito</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Formato: perguntas respondidas com analogias (High Ticket / Low Ticket)</div><div class="ihook">Sandro mencionou que esse formato precisaria de "estética diferente senão não gostaria". Testar a estética antes de comprometer com a série.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Testar estética visual antes de criar série</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Séries por arquétipo de comprador — como criar conteúdo para governantes, curadores, etc.</div><div class="ihook">Série especializada por perfil de comprador. Precisa de mapeamento dos arquétipos e roteiros por perfil antes de executar.</div></td><td><span class="at at-2">O Mapa</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2+F3</span></td><td><span class="fmtt">Mapear os arquétipos e criar roteiro por perfil</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Análise do Maquiavel / 48 Leis do Poder aplicado a negócios</div><div class="ihook">Conteúdo rico mas precisa de cuidado para não colidir com os valores católicos da marca. Definir o ângulo antes de criar.</div></td><td><span class="at at-3">Jogo Invisível</span></td><td><span class="rt rt-2">A2</span><span class="rt rt-3">A3</span></td><td><span class="ft">F3</span></td><td><span class="fmtt">Definir o ângulo compatível com os valores da marca</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+      <tr class="sem-row"><td><div class="stag" style="background:#FEF3C7;color:#92400E;">⚠ SEM CATEGORIA</div><div class="ititle">Papers para estrategistas enviarem para clientes</div><div class="ihook">Material de autoridade para membros da tribo usarem com seus clientes. É produto/entregável, não conteúdo de feed. Pode gerar conteúdo de "como uso isso".</div></td><td><span class="at at-5">A Tribo</span></td><td><span class="rt rt-3">A3</span></td><td><span class="ft">F2</span></td><td><span class="fmtt">Definir escopo dos papers e criar como produto interno</span></td><td><span class="st st-todo">A Explorar</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ADD -->
+<div class="add-box">
+  <div class="add-icon">+</div>
+  <div class="add-title">Nova Categoria</div>
+  <div class="add-desc">Copie um bloco de categoria inteiro e ajuste o id, a cor do badge e o título. Para novas ideias em categorias existentes, copie uma linha <code>&lt;tr&gt;</code> do tbody e edite.</div>
+</div>
+
+<div class="footer">
+  <p>Sandro San · Milionário Renegado · Banco de Ideias de Conteúdo · 101 temas · 14 categorias · EMPIRE · 2025</p>
+</div>
+
+</div>
+</body>
+</html>
